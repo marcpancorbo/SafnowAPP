@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Safnow</string>
+    <string name="name">Nom</string>
+    <string name="phone">Telèfon</string>
+    <string name="send">Enviar</string>
+    <string name="Information">Introdueix les teves dades</string>
+    <string name="InputToast">El nom i el telèfon no poden quedar buits</string>
+</resources>
