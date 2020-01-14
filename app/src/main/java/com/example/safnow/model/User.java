@@ -3,7 +3,7 @@ package com.example.safnow.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends Nameable{
 
     private String name;
     private String phoneNumber;
@@ -33,4 +33,6 @@ public class User {
     public void setAlerts(List<Alert> alerts) {
         this.alerts = alerts;
     }
+
+
 }
