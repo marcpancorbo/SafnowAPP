@@ -10,21 +10,21 @@
     <ImageView
         android:id="@+id/ivContactImage"
         android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_height="89dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/customer" />
+        app:srcCompat="@drawable/contact_icon" />
 
     <TextView
         android:id="@+id/tvContactName"
         android:layout_width="166dp"
         android:layout_height="57dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4CAF50"
         android:textSize="30sp"
