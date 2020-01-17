@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.safnow.model.SafnowAppDaoImpl;
+import com.example.safnow.model.User;
+
 public class MainActivity extends AppCompatActivity {
     private TextView name;
     private TextView phoneNumber;
@@ -25,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkFields()){
-
+                    SafnowAppDaoImpl safnowAppDaoImp = SafnowAppDaoImpl.getInstance(MainActivity.this);
+                    User user = new User();
+                    user.setName(name.getText().toString());
+                    user.setPhoneNumber(phoneNumber.getText().toString());
+                    safnowAppDaoImp.storeUser(user);
                 }
             }
         });
