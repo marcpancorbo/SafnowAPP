@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = new User();
                     user.setName(name.getText().toString());
                     user.setPhoneNumber(phoneNumber.getText().toString());
+                    Log.d("phn",user.getPhoneNumber());
                     safnowAppDaoImp.storeUser(user);
                 }
             }

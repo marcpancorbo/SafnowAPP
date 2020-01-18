@@ -3,17 +3,23 @@ package com.example.safnow.model;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.safnow.MainActivity;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,37 +59,27 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
 
     @Override
     public void storeUser(final User user) {
-        Gson gson = new Gson();
-        final String json = gson.toJson(user);
-        Log.d("luis", json);
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest request = new StringRequest(
-                Request.Method.POST,
-                URL_API,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("luis", "bien api");
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("luis", error.getMessage());
-                    }
-                }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap headers = new HashMap();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("name",user.getName());
+            object.put("phoneNumber",user.getPhoneNumber());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                @Override
-                protected String getParamsEncoding() {
-                    return json;
-                }
-        };
-        queue.add(request);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_API, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("marc",response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("marc",error.getMessage());
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
     }
 }
