@@ -2,6 +2,7 @@ package com.example.safnow.model;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.safnow.MainActivity;
+import com.example.safnow.MapActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -72,7 +74,8 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("marc",response.toString());
+                        Intent intent = new Intent(context, MapActivity.class);
+                        context.startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override
