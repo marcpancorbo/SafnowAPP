@@ -4,26 +4,16 @@ package com.example.safnow.model;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.safnow.MainActivity;
 import com.example.safnow.MapActivity;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SafnowAppDaoImpl implements SafnowAppDao{
 
@@ -49,7 +39,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
     }
 
     private static SafnowAppDaoImpl safnowAppDaoImpl;
-    private final String URL_API = "http://safnow.dynu.net/Safnow/rest/store/user";
+    private final String URL_API = "http://10.0.2.2:8080/rest/store/user";
 
 
     public static SafnowAppDaoImpl getInstance(Context context){
