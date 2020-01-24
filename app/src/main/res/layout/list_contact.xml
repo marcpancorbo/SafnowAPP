@@ -21,13 +21,14 @@
 
     <TextView
         android:id="@+id/tvContactName"
-        android:layout_width="166dp"
-        android:layout_height="57dp"
+        android:layout_width="159dp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#4CAF50"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivContactImage"
@@ -37,11 +38,10 @@
         android:id="@+id/imgBtnStar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/textviewborder"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@+id/tvContactName"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:srcCompat="@drawable/btn_star" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
