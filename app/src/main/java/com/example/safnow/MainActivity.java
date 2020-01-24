@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView name;
     private TextView phoneNumber;
     private Button btSend;
+    private ProgressBar pbMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pbMain = findViewById(R.id.pbMain);
         name = findViewById(R.id.tvName);
         phoneNumber = findViewById(R.id.tvPhone);
         btSend = findViewById(R.id.btSend);
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkFields()){
+                    pbMain.setVisibility(View.VISIBLE);
                     SafnowAppDaoImpl safnowAppDaoImp = SafnowAppDaoImpl.getInstance(MainActivity.this);
                     User user = new User();
                     user.setName(name.getText().toString());

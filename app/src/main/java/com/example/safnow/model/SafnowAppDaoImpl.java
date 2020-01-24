@@ -1,9 +1,13 @@
 package com.example.safnow.model;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.safnow.MapActivity;
+import com.example.safnow.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +71,8 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
                     public void onResponse(JSONObject response) {
                         Intent intent = new Intent(context, MapActivity.class);
                         context.startActivity(intent);
+                        ProgressBar progress = (ProgressBar) ((Activity) context).findViewById(R.id.pbMain);
+                        progress.setVisibility(View.INVISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override
