@@ -6,4 +6,6 @@
     <string name="send">Enviar</string>
     <string name="Information">Introdueix les teves dades</string>
     <string name="InputToast">El nom i el telèfon no poden quedar buits</string>
+    <string name="code">Codi</string>
+
 </resources>

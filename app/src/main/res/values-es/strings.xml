@@ -6,4 +6,6 @@
     <string name="send">Enviar</string>
     <string name="Information">Introduce tus datos</string>
     <string name="InputToast">El nombre y el teléfono no pueden quedar vacíos</string>
+    <string name="code">Código</string>
+
 </resources>
