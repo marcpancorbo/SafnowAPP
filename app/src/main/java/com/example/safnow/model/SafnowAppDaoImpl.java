@@ -14,7 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.safnow.MapActivity;
+import com.example.safnow.MainActivity;
+import com.example.safnow.PreferencesController;
 import com.example.safnow.R;
 
 import org.json.JSONException;
@@ -56,8 +57,9 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
 
     @Override
     public void storeUser(final User user) {
+        final PreferencesController preferencesController = PreferencesController.getInstance();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JSONObject object = new JSONObject();
+        final JSONObject object = new JSONObject();
         try {
             object.put("name",user.getName());
             object.put("phoneNumber",user.getPhoneNumber());
@@ -69,10 +71,18 @@ public class SafnowAppDaoImpl implements SafnowAppDao{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Intent intent = new Intent(context, MapActivity.class);
+                        Intent intent = new Intent(context, MainActivity.class);
                         context.startActivity(intent);
-                        ProgressBar progress = (ProgressBar) ((Activity) context).findViewById(R.id.pbMain);
+                        ((Activity) context).finish();
+                        ProgressBar progress = ((Activity) context).findViewById(R.id.pbMain);
                         progress.setVisibility(View.INVISIBLE);
+                        try {
+                            preferencesController.addToken(context, object.getString("name"));
+                            Log.d("admin", preferencesController.getToken(context));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("admin", e.getMessage());
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
