@@ -47,7 +47,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
     }
 
     private static SafnowAppDaoImpl safnowAppDaoImpl;
-    private final String URL_API = "http://10.0.2.2:8080/rest/login";
+    private final String URL_API = "http://10.0.2.2:8080/rest/";
 
 
     public static SafnowAppDaoImpl getInstance(Context context) {
@@ -63,11 +63,12 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest request = new StringRequest(
                 Request.Method.POST,
-                URL_API,
+                URL_API + "login",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("administrador", response);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -75,15 +76,25 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
                 System.out.println("ERROR: =================" + error);
                 Log.d("administrador", error.getMessage());
             }
-        }) {
+        })
+        {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                Log.d("administrador", "coge params");
                 Map<String, String> params = new HashMap<>();
-                params.put("username", "safnow");
-                params.put("password", "safnow");
+                params.put("phoneNumber", user.getPhoneNumber());
+                //params.put("verificationCode", "1234");
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
                 return params;
             }
         };
         queue.add(request);
+        Log.d("administrador", request.toString());
     }
 }
