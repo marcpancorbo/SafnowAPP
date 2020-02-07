@@ -12,11 +12,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.example.safnow.MainActivity;
 import com.example.safnow.PreferencesController;
 
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +39,9 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
     public User getUser(String identifier) {
         return null;
     }
+
+
+
 
     @Override
     public void storeAlert(Alert alert) {
@@ -58,43 +65,17 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
     }
 
     @Override
-    public void storeUser(final User user) {
+    public void storeUser(final User user, Response.Listener listener, Response.ErrorListener errorListener) {
         final PreferencesController preferencesController = PreferencesController.getInstance();
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest request = new StringRequest(
-                Request.Method.POST,
-                URL_API + "login",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("administrador", response);
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("ERROR: =================" + error);
-                Log.d("administrador", error.getMessage());
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Log.d("administrador", "coge params");
-                Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", user.getPhoneNumber());
-                //params.put("verificationCode", "1234");
-                return params;
-            }
+        Map<String, String> params = new HashMap();
+        params.put("name", user.getName());
+        params.put("phoneNumber", user.getPhoneNumber());
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
-        queue.add(request);
-        Log.d("administrador", request.toString());
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"store/user", parameters, listener, errorListener);
+        queue.add(jsonRequest);
     }
 }
