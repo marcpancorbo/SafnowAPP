@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.example.safnow.model.SafnowAppDaoImpl;
 import com.example.safnow.model.User;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar pbMain;
     private boolean name_set = false;
     private TextView code;
+    private User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
                     if(checkFieldsName()){
                         pbMain.setVisibility(View.VISIBLE);
                         SafnowAppDaoImpl safnowAppDaoImp = SafnowAppDaoImpl.getInstance(RegisterActivity.this);
-                        User user = new User();
                         user.setName(name.getText().toString());
                         user.setPhoneNumber(phoneNumber.getText().toString());
                         Log.d("administrador",user.getPhoneNumber());
@@ -72,7 +73,25 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }else{
                     if(checkFieldCode()){
-
+                        final PreferencesController preferencesController = PreferencesController.getInstance();
+                        SafnowAppDaoImpl safnowAppDaoImp = SafnowAppDaoImpl.getInstance(RegisterActivity.this);
+                        safnowAppDaoImp.sendVerificationCode(user, code.getText().toString(), new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                String token = null;
+                                try {
+                                    token = response.getString("token");
+                                    preferencesController.addToken(RegisterActivity.this, token);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("administrador", "ERROR: "+error.getMessage());
+                            }
+                        });
                     }
                 }
             }

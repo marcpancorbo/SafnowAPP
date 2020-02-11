@@ -6,18 +6,14 @@ import android.content.Context;
 import android.util.Log;
 
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
 
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import com.example.safnow.MainActivity;
-import com.example.safnow.PreferencesController;
 
 
 import org.json.JSONObject;
@@ -66,7 +62,6 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
 
     @Override
     public void storeUser(final User user, Response.Listener listener, Response.ErrorListener errorListener) {
-        final PreferencesController preferencesController = PreferencesController.getInstance();
         RequestQueue queue = Volley.newRequestQueue(context);
 
         Map<String, String> params = new HashMap();
@@ -76,6 +71,21 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         JSONObject parameters = new JSONObject(params);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"store/user", parameters, listener, errorListener);
+        queue.add(jsonRequest);
+    }
+
+    @Override
+    public void sendVerificationCode(final User user, final String code, Response.Listener listener, Response.ErrorListener errorListener) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        Map<String, String> params = new HashMap();
+        params.put("phoneNumber", user.getPhoneNumber());
+        params.put("verificationCode", code);
+
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"login", parameters, listener, errorListener);
+        Log.d("administrador", jsonRequest.toString());
         queue.add(jsonRequest);
     }
 }
