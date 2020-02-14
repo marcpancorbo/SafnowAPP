@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("administrador", error.getMessage());
+                                //Log.d("administrador", error.getMessage());
                             }
                         });
                     }
@@ -81,7 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 String token = null;
                                 try {
                                     token = response.getString("token");
+                                    Log.d("administrador", token);
                                     preferencesController.addToken(RegisterActivity.this, token);
+                                    finish();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
