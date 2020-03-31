@@ -1,49 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout android:id="@+id/two_line_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/alert_light_frame"
-    android:orientation="vertical">
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:minHeight="72dp"
+    android:paddingEnd="?listPreferredItemPaddingRight"
+    android:paddingLeft="?listPreferredItemPaddingLeft"
+    android:paddingRight="?listPreferredItemPaddingRight"
+    android:paddingStart="?listPreferredItemPaddingLeft"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/ivContactImage"
-        android:layout_width="77dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/icon_contact" />
+        android:id="@+id/primary_action"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/add_contact" />
 
-    <TextView
-        android:id="@+id/tvContactName"
-        android:layout_width="152dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-light"
-        android:text="TextView"
-        android:textColor="#37C23D"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivContactImage"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imgBtnStar"
+    <LinearLayout
+        android:id="@+id/lines_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/tvContactName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/btn_star" />
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/primary_action"
+        android:layout_toLeftOf="@+id/secondary_action"
+        android:layout_toRightOf="@+id/primary_action"
+        android:layout_toStartOf="@+id/secondary_action"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/first_text_view"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            tools:text="First Line" />
+
+        <TextView
+            android:id="@+id/second_text_view"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            tools:text="Second Line" />
+    </LinearLayout>
+
+    <!-- Can be replaced by a widget -->
+    <ImageView
+        android:id="@+id/secondary_action"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/btn_star"/>
+</RelativeLayout>
