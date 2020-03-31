@@ -26,6 +26,8 @@ import java.util.Map;
 public class SafnowAppDaoImpl implements SafnowAppDao {
 
     private Context context;
+    private final String URL_API = "https://safnow.azurewebsites.net/rest/";
+    private static SafnowAppDaoImpl safnowAppDaoImpl;
 
     public SafnowAppDaoImpl(Context context) {
         this.context = context;
@@ -35,8 +37,6 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
     public User getUser(String identifier) {
         return null;
     }
-
-
 
 
     @Override
@@ -49,8 +49,6 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
 
     }
 
-    private static SafnowAppDaoImpl safnowAppDaoImpl;
-    private final String URL_API = "http://10.0.2.2:8080/rest/";
 
 
     public static SafnowAppDaoImpl getInstance(Context context) {
