@@ -24,7 +24,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1:
                 return new MapsActivity();
             case 2:
-                return new Contact();
+                return new SettingsActivity();
             default:
                 return null;
         }

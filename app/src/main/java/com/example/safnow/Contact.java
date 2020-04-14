@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contact extends Fragment{
+
     private RecyclerView rv;
     public Contact() {
         // Required empty public constructor

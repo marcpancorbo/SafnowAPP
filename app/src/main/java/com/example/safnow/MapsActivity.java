@@ -43,6 +43,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
     Location mLastLocation;
     Marker mCurrLocationMarker;
     FusedLocationProviderClient mFusedLocationClient;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
