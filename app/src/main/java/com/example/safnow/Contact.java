@@ -63,6 +63,7 @@ public class Contact extends Fragment{
         rv.setAdapter(new ContactAdapter(users));
         return root;
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<User> GetAllContacts(){
         ContentResolver cr = this.getContext().getContentResolver();
         List<User> users = new ArrayList<>();
@@ -74,9 +75,12 @@ public class Contact extends Fragment{
                 while (cursor.moveToNext()) {
                     User user = new User();
                     user.setName(cursor.getString(nameIndex));
-                    user.setPhoneNumber(cursor.getString(numberIndex));
-                    users.add(user);
+                    user.setPhoneNumber(cursor.getString(numberIndex).replaceAll("\\s+", ""));
+                    if (users.stream().noneMatch(user1 -> user1.getPhoneNumber().equalsIgnoreCase(user.getPhoneNumber()))) {
+                        users.add(user);
+                    }
                 }
+
             } finally {
                 cursor.close();
             }
