@@ -20,11 +20,11 @@ public class PageAdapter extends FragmentPagerAdapter {
         Log.d("marc","NumOfTabs" + position);
         switch (position) {
             case 0:
-                return  new Contact();
+                return new SettingsActivity();
             case 1:
                 return new MapsActivity();
             case 2:
-                return new SettingsActivity();
+                return new Contact();
             default:
                 return null;
         }

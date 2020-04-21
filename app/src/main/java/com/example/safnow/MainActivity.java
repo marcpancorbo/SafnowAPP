@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        AskNotificationTimer notification = new AskNotificationTimer(this, 5000);
+        //AskNotificationTimer notification = new AskNotificationTimer(this, 5000);
     }
 
     /**
