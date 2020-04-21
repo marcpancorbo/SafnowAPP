@@ -40,6 +40,7 @@ public class SettingsActivity extends Fragment {
         option.setName("Temporizador");
         option.setDescription("Personaliza el tiempo entre notificacion");
         option.setIcon(R.drawable.temporizador);
+        options.add(option);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new SettingAdapter(options));
         return root;
@@ -76,6 +77,8 @@ public class SettingsActivity extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Option option = options.get(position);
             holder.textName.setText(option.getName());
+            //TODO Poder guardar un icono en el objeto option para poder rellenar dinamicamente el imageview
+            holder.textDescription.setText(option.getDescription());
         }
 
         @Override
