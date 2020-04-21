@@ -20,7 +20,7 @@ public class PageAdapter extends FragmentPagerAdapter {
         Log.d("marc","NumOfTabs" + position);
         switch (position) {
             case 0:
-                return  new Contact();
+                return  new BotonSOS();
             case 1:
                 return new MapsActivity();
             case 2:
