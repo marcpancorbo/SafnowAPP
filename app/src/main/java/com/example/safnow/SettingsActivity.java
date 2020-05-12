@@ -41,6 +41,8 @@ public class SettingsActivity extends Fragment {
         option.setDescription("Personaliza el tiempo entre notificacion");
         option.setIcon(R.drawable.temporizador);
         options.add(option);
+        options.add(option);
+
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new SettingAdapter(options));
         return root;

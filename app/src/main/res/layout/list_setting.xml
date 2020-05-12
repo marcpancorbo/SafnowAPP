@@ -7,36 +7,65 @@
     android:clickable="true"
     android:focusable="auto">
 
-    <ImageView
-        android:id="@+id/IVicon"
-        android:layout_width="75dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="false"
+    <RelativeLayout
+        android:id="@+id/two_line_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:minHeight="72dp"
+        android:paddingStart="?listPreferredItemPaddingLeft"
+        android:paddingLeft="?listPreferredItemPaddingLeft"
+        android:paddingEnd="?listPreferredItemPaddingRight"
+        android:paddingRight="?listPreferredItemPaddingRight"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/temporizador" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="264dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/IVicon"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/lines_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toStartOf="@+id/secondary_action"
+            android:layout_toLeftOf="@+id/secondary_action"
+            android:layout_toEndOf="@+id/primary_action"
+            android:layout_toRightOf="@+id/primary_action"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="268dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/IVicon"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="264dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="10dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/IVicon"
+            android:layout_width="75dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            app:srcCompat="@drawable/temporizador" />
+
+        <!-- Can be replaced by a widget -->
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
