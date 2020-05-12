@@ -49,8 +49,6 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
 
     }
 
-
-
     public static SafnowAppDaoImpl getInstance(Context context) {
         if (safnowAppDaoImpl == null) {
             safnowAppDaoImpl = new SafnowAppDaoImpl(context);
@@ -65,9 +63,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         Map<String, String> params = new HashMap();
         params.put("name", user.getName());
         params.put("phoneNumber", user.getPhoneNumber());
-
         JSONObject parameters = new JSONObject(params);
-
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"store/user", parameters, listener, errorListener);
         queue.add(jsonRequest);
     }
