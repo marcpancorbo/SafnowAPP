@@ -1,6 +1,9 @@
 package com.example.safnow;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,6 @@ public class SettingsActivity extends Fragment {
         option.setDescription("Personaliza el tiempo entre notificacion");
         option.setIcon(R.drawable.temporizador);
         options.add(option);
-        options.add(option);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new SettingAdapter(options));
@@ -60,11 +62,29 @@ public class SettingsActivity extends Fragment {
             private TextView textName;
             private TextView textDescription;
 
-            public ViewHolder(@NonNull View itemView) {
+            ViewHolder(View itemView) {
                 super(itemView);
                 this.icon = itemView.findViewById(R.id.IVicon);
                 this.textName = itemView.findViewById(R.id.textName);
                 this.textDescription = itemView.findViewById(R.id.textDescription);
+                this.textDescription.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openTimeSelector();
+                    }
+                });
+                this.icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openTimeSelector();
+                    }
+                });
+                this.textName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openTimeSelector();
+                    }
+                });
             }
         }
 
@@ -87,7 +107,34 @@ public class SettingsActivity extends Fragment {
         public int getItemCount() {
             return options.size();
         }
+
     }
+
+    private void openTimeSelector() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        //Set personalized layout
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.time_picker, null));
+
+        builder.setMessage("Selecciona el tiempo: ")
+                .setTitle("Timer");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Log.d("administrador", "OK!");
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     private static class Option {
 
