@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,7 @@ public class Contact extends Fragment{
             holder.userName.setText(user.getName() == null ? "Undefined":user.getName());
             holder.phoneNumber.setText(user.getPhoneNumber());
         }
+
 
         @Override
         public int getItemCount() {
