@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                //Log.d("administrador", error.getMessage());
+                                Log.d("administrador", error.getMessage());
                             }
                         });
                     }

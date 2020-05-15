@@ -1,19 +1,23 @@
 package com.example.safnow.model;
 
-public class Alert {
+import java.util.ArrayList;
+import java.util.List;
 
-    private String message;
+public class  Alert {
+
+    private String name;
     private String phoneDest;
-    private User user;
+    private User usuario;
     private Ubication ubication;
+    public List<String> To = new ArrayList<>();
 
 
-    public String getMessage() {
-        return message;
+    public String getName() {
+        return name;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhoneDest() {
@@ -24,12 +28,12 @@ public class Alert {
         this.phoneDest = phoneDest;
     }
 
-    public User getUser() {
-        return user;
+    public User getUsuario() {
+        return usuario;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
     }
 
     public Ubication getUbication() {
@@ -38,5 +42,13 @@ public class Alert {
 
     public void setUbication(Ubication ubication) {
         this.ubication = ubication;
+    }
+
+    public List<String> getTo() {
+        return To;
+    }
+
+    public void setTo(List<String> to) {
+        To = to;
     }
 }

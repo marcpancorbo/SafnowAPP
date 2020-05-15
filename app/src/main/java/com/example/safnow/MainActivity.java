@@ -1,28 +1,22 @@
 package com.example.safnow;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.google.android.material.tabs.TabItem;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.safnow.model.Alert;
+import com.example.safnow.model.SafnowAppDao;
+import com.example.safnow.model.SafnowAppDaoImpl;
+import com.example.safnow.model.Ubication;
+import com.example.safnow.model.User;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +32,30 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        checkToken();
+        SafnowAppDao safnowAppDao = SafnowAppDaoImpl.getInstance(this);
+        Alert alert = new Alert();
+        alert.setName("Ayudame Por favor");
+        User user = new User();
+        user.setPhoneNumber("654023488");
+        alert.setUsuario(user);
+        Ubication ubication = new Ubication();
+        ubication.setAltitude("434354");
+        ubication.setLatitude("564546546");
+        alert.getTo().add("64324565");
+        alert.getTo().add("65456578");
+        alert.setUbication(ubication);
+        safnowAppDao.storeAlert(alert, new Response.Listener() {
+            @Override
+            public void onResponse(Object response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
         //AskNotificationTimer notification = new AskNotificationTimer(this, 5000);
     }
 
