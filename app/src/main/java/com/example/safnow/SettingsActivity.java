@@ -7,7 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +27,7 @@ import java.util.List;
 public class SettingsActivity extends Fragment {
 
     private RecyclerView rv;
+    private final String TEMPORIZADOR = "Temporizador";
 
     public SettingsActivity() {
         // Required empty public constructor
@@ -40,7 +46,7 @@ public class SettingsActivity extends Fragment {
         this.rv = root.findViewById(R.id.recyclerViewSettings);
         List<Option> options = new ArrayList<>();
         Option option = new Option();
-        option.setName("Temporizador");
+        option.setName(TEMPORIZADOR);
         option.setDescription("Personaliza el tiempo entre notificacion");
         option.setIcon(R.drawable.temporizador);
         options.add(option);
@@ -70,19 +76,40 @@ public class SettingsActivity extends Fragment {
                 this.textDescription.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        openTimeSelector();
+                        int position = getAdapterPosition();
+                        switch (options.get(position).getName()) {
+                            case TEMPORIZADOR:
+                                openTimeSelector();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
                 this.icon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        openTimeSelector();
+                        int position = getAdapterPosition();
+                        switch (options.get(position).getName()) {
+                            case TEMPORIZADOR:
+                                openTimeSelector();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
                 this.textName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        openTimeSelector();
+                        int position = getAdapterPosition();
+                        switch (options.get(position).getName()) {
+                            case TEMPORIZADOR:
+                                openTimeSelector();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
             }
@@ -111,18 +138,43 @@ public class SettingsActivity extends Fragment {
     }
 
     private void openTimeSelector() {
+        final PreferencesController controller = PreferencesController.getInstance();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         //Set personalized layout
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.time_picker, null));
+        View view = inflater.inflate(R.layout.time_picker, null);
+        builder.setView(view);
+
+        final Spinner spinner = view.findViewById(R.id.timeSpinner);
+        //Fill the spinner with data
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("5");
+        arrayList.add("10");
+        arrayList.add("20");
+        arrayList.add("30");
+        arrayList.add("60");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+
+        int timePreferences = controller.getTimeNotification(getContext());
+        Log.d("administrador", String.valueOf(timePreferences));
+
+        if(timePreferences != -1){
+            spinner.setSelection(arrayList.indexOf(String.valueOf(timePreferences)));
+        }
+
+        final Switch timeSwitch = view.findViewById(R.id.timeSwitch);
 
         builder.setMessage("Selecciona el tiempo: ")
                 .setTitle("Timer");
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Log.d("administrador", "OK!");
+                Log.d("administrador", "valor de switch: " + timeSwitch.isChecked());
+                Log.d("administrador", "valor de spinner: " + spinner.getSelectedItem().toString());
+                controller.setTimerNotification(getContext(), Integer.parseInt(spinner.getSelectedItem().toString()));
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
