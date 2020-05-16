@@ -207,6 +207,7 @@ public class SettingsActivity extends Fragment {
             AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance();
             if (askNotificationTimer != null) {
                 Toast.makeText(getContext(), "Has cancelado el timer", Toast.LENGTH_SHORT).show();
+                askNotificationTimer.cancelCheckTime();
                 askNotificationTimer.cancelNotification();
             }
         }

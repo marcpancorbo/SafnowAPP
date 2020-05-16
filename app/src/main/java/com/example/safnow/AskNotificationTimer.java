@@ -15,8 +15,6 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.app.Notification.EXTRA_NOTIFICATION_ID;
-
 
 public class AskNotificationTimer {
 
@@ -57,59 +55,81 @@ public class AskNotificationTimer {
      * Metodo que permite cancelar la ejecucion de la notificacion
      */
     public void cancelNotification() {
-        this.timer.cancel();
-        this.timer.purge();
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer.purge();
+        }
     }
-
-    public void cancelCheckTime(){
-        timerNotification.cancel();
-        timerNotification.purge();
-    }
-
 
     /**
-     * (Provisional todavia) Metodo que permite crear la notificacion de pregunta que se ejecutara cada cierto tiempo
+     * Method that allows to stop checking if the user responds in time
+     */
+    public void cancelCheckTime() {
+        if (timerNotification != null) {
+            timerNotification.cancel();
+            timerNotification.purge();
+        }
+    }
+
+    /**
+     * Metodo que permite crear la notificacion de pregunta que se ejecutara cada cierto tiempo
      */
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void createNotification(Activity activity) {
+    private void createNotification(final Activity activity) {
         NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = activity.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
 
-        //Intent prepared for YES button
-        Intent cancelIntent = new Intent(activity, NotificationBroadcastReceiver.class);
-        cancelIntent.setAction("NotificationBroadcastReceiver");
-        cancelIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-        PendingIntent snoozePendingIntent =
-                PendingIntent.getBroadcast(activity, 0, cancelIntent, 0);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, "1")
-                .setSmallIcon(R.drawable.contacts_icon)
-                .setContentTitle("prueba")
-                .setContentText("¿Estás bien?")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .addAction(R.drawable.contacts_icon, "SI", snoozePendingIntent);
-
         final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
+        NotificationCompat.Builder builder = setNotificationBuilder();
         notificationManager.notify(1, builder.build());
 
         // Prepare the timetask when user no responds
         timerNotification = new Timer();
         taskNotification = new TimerTask() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void run() {
-                Log.d("administrador","Alarma!!");
+                Log.d("administrador", "Alarma!!");
                 notificationManager.cancel(1);
                 cancelCheckTime();
                 cancelNotification();
+                PreferencesController controller = PreferencesController.getInstance();
+                controller.setTimerNotificationActive(activity, false);
             }
         };
         timerNotification.schedule(taskNotification, 30000);
     }
 
+    /**
+     * Method that allows to set the Notification Builder
+     *
+     * @return Returns the Notification Builder
+     */
+    private NotificationCompat.Builder setNotificationBuilder() {
+        //Intent prepared for YES button
+        Intent yesIntent = new Intent(activity, NotificationBroadcastReceiver.class);
+        yesIntent.setAction("NotificationBroadcastReceiver");
+        yesIntent.setType("SI");
+        PendingIntent yesPendingIntent =
+                PendingIntent.getBroadcast(activity, 0, yesIntent, 0);
+
+        //Intent prepared for NO button
+        Intent noIntent = new Intent(activity, NotificationBroadcastReceiver.class);
+        noIntent.setAction("NotificationBroadcastReceiver");
+        noIntent.setType("NO");
+        PendingIntent noPendingIntent =
+                PendingIntent.getBroadcast(activity, 0, noIntent, 0);
+
+        return new NotificationCompat.Builder(activity, "1")
+                .setSmallIcon(R.drawable.contacts_icon)
+                .setContentTitle("IMPORTANTE")
+                .setContentText("¿Estás bien?")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .addAction(R.drawable.contacts_icon, "SI", yesPendingIntent)
+                .addAction(R.drawable.contacts_icon, "NO", noPendingIntent);
+    }
 
 }
