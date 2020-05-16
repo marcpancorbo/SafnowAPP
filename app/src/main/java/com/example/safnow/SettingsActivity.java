@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -149,35 +150,36 @@ public class SettingsActivity extends Fragment {
         final Spinner spinner = view.findViewById(R.id.timeSpinner);
         //Fill the spinner with data
         ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("1");
         arrayList.add("5");
         arrayList.add("10");
         arrayList.add("20");
         arrayList.add("30");
         arrayList.add("60");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arrayList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
         int timePreferences = controller.getTimeNotification(getContext());
-        Log.d("administrador", String.valueOf(timePreferences));
+        boolean notificationActive = controller.getTimerNotificationActive(getContext());
 
-        if(timePreferences != -1){
+        if (timePreferences != -1) {
             spinner.setSelection(arrayList.indexOf(String.valueOf(timePreferences)));
         }
 
         final Switch timeSwitch = view.findViewById(R.id.timeSwitch);
+        timeSwitch.setChecked(notificationActive);
+
 
         builder.setMessage("Selecciona el tiempo: ")
                 .setTitle("Timer");
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Log.d("administrador", "valor de switch: " + timeSwitch.isChecked());
-                Log.d("administrador", "valor de spinner: " + spinner.getSelectedItem().toString());
-                controller.setTimerNotification(getContext(), Integer.parseInt(spinner.getSelectedItem().toString()));
+                configureTimer(spinner.getSelectedItem().toString(), timeSwitch.isChecked());
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
@@ -187,6 +189,28 @@ public class SettingsActivity extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Method to configure notification timer
+     *
+     * @param spinnerItem       Receive the string which contains the time between notifications
+     * @param timeSwitchBoolean Receive the boolean which controls if timer notifications is activated
+     */
+    private void configureTimer(String spinnerItem, boolean timeSwitchBoolean) {
+        PreferencesController controller = PreferencesController.getInstance();
+        controller.setTimerNotification(getContext(), Integer.parseInt(spinnerItem));
+        controller.setTimerNotificationActive(getContext(), timeSwitchBoolean);
+        if (timeSwitchBoolean) {
+            long time = Integer.parseInt(spinnerItem) * 60000; //Convert to miliseconds
+            AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance(getActivity(), time);
+            Toast.makeText(getContext(), "Has activado el timer", Toast.LENGTH_SHORT).show();
+        } else {
+            AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance(getActivity());
+            if (askNotificationTimer != null) {
+                Toast.makeText(getContext(), "Has cancelado el timer", Toast.LENGTH_SHORT).show();
+                askNotificationTimer.cancelNotification();
+            }
+        }
+    }
 
     private static class Option {
 

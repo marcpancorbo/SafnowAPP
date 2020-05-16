@@ -19,9 +19,20 @@ public class AskNotificationTimer {
     private long time;
     private Timer timer;
     private TimerTask task;
+    private static AskNotificationTimer askNotificationTimer;
 
 
-    public AskNotificationTimer(Activity activity, long time){
+    public static AskNotificationTimer getInstance(Activity activity, long time) {
+        askNotificationTimer = new AskNotificationTimer(activity, time);
+        return askNotificationTimer;
+    }
+
+    public static AskNotificationTimer getInstance(Activity activity) {
+        return askNotificationTimer;
+    }
+
+
+    private AskNotificationTimer(Activity activity, long time) {
         this.activity = activity;
         this.time = time;
         this.timer = new Timer();
@@ -38,7 +49,7 @@ public class AskNotificationTimer {
     /**
      * Metodo que permite cancelar la ejecucion de la notificacion
      */
-    public void cancelNotification(){
+    public void cancelNotification() {
         this.timer.cancel();
         this.timer.purge();
     }
@@ -65,7 +76,6 @@ public class AskNotificationTimer {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
         notificationManager.notify(1, builder.build());
     }
-
 
 
 }
