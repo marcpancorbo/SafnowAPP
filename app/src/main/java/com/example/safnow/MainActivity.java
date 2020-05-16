@@ -2,26 +2,24 @@ package com.example.safnow;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.example.safnow.model.Alert;
-import com.example.safnow.model.SafnowAppDao;
-import com.example.safnow.model.SafnowAppDaoImpl;
-import com.example.safnow.model.Ubication;
-import com.example.safnow.model.User;
+
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter pageAdapter;
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +30,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        checkToken();
-        /*
-        SafnowAppDao safnowAppDao = SafnowAppDaoImpl.getInstance(this);
-
-        safnowAppDao.storeAlert(alert, new Response.Listener() {
-            @Override
-            public void onResponse(Object response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-         */
-        //AskNotificationTimer notification = new AskNotificationTimer(this, 5000);
+        showNotification();
     }
 
     /**
@@ -56,15 +38,30 @@ public class MainActivity extends AppCompatActivity {
      */
     private void checkToken() {
         PreferencesController preferencesController = PreferencesController.getInstance();
-       /* if (preferencesController.getToken(MainActivity.this) == null) {
+        if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
-        */
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-        startActivity(intent);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void showNotification() {
+        NotificationChannel channel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.drawable.contacts_icon)
+                .setContentTitle("prueba")
+                .setContentText("prueba")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+    }
 
 }
