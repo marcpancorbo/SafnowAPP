@@ -8,7 +8,7 @@ public class User extends Nameable{
     private String name;
     private String phoneNumber;
     private List<Alert> alerts = new ArrayList<>();
-
+    private Boolean favorite=false;
 
     public String getName() {
         return name;
@@ -34,5 +34,11 @@ public class User extends Nameable{
         this.alerts = alerts;
     }
 
+    public Boolean getFavorite() {
+        return favorite;
+    }
 
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
 }
