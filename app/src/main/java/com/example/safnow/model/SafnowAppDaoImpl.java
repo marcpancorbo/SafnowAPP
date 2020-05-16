@@ -43,14 +43,14 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
 
 
     @Override
-    public void storeAlert(String latitude, String longitude, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void storeAlert(String latitude, String longitude) {
         Alert alert = generateAlert(latitude, longitude);
         RequestQueue queue = Volley.newRequestQueue(context);
         Gson gson = new Gson();
         String j = gson.toJson(alert);
         try {
             JSONObject parameters = new JSONObject(j);
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"Alerta", parameters, listener, errorListener) { //no semicolon or coma
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"Alerta", parameters, null, null) { //no semicolon or coma
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
@@ -116,9 +116,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         Ubication ubication = new Ubication();
         ubication.setAltitude(longitude);
         ubication.setLatitude(latitude);
-        alert.getTo().add("618638042");
         alert.getTo().add("654023488");
-        alert.getTo().add("608816327");
         alert.setUbication(ubication);
         return alert;
     }
