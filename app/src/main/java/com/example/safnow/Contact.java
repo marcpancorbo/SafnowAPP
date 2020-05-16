@@ -35,15 +35,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Contact extends Fragment{
-
-    private static final String[] PROJECTION = new String[]{
+    private static final String[] PROJECTION = new String[] {
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
             ContactsContract.Contacts.DISPLAY_NAME,
             ContactsContract.CommonDataKinds.Phone.NUMBER
     };
 
     private RecyclerView rv;
-
     public Contact() {
         // Required empty public constructor
     }
@@ -59,16 +57,16 @@ public class Contact extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.activity_contact, container, false);
-        if (this.getContext().getApplicationContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+        if( this.getContext().getApplicationContext().checkSelfPermission( Manifest.permission.READ_CONTACTS ) != PackageManager.PERMISSION_GRANTED )
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, 1);
         this.rv = root.findViewById(R.id.recyclerView);
         List<User> users = GetAllContacts().stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new ContactAdapter(users));
-         return root;
+        return root;
     }
-
-    public List<User> GetAllContacts() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<User> GetAllContacts(){
         ContentResolver cr = this.getContext().getContentResolver();
         List<User> users = new ArrayList<>();
         Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, null, null, null);
@@ -79,9 +77,12 @@ public class Contact extends Fragment{
                 while (cursor.moveToNext()) {
                     User user = new User();
                     user.setName(cursor.getString(nameIndex));
-                    user.setPhoneNumber(cursor.getString(numberIndex));
-                    users.add(user);
+                    user.setPhoneNumber(cursor.getString(numberIndex).replaceAll("\\s+", ""));
+                    if (users.stream().noneMatch(user1 -> user1.getPhoneNumber().equalsIgnoreCase(user.getPhoneNumber()))) {
+                        users.add(user);
+                    }
                 }
+
             } finally {
                 cursor.close();
             }
@@ -89,15 +90,14 @@ public class Contact extends Fragment{
         return users;
     }
 
-
-    class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+    class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder>{
         private List<User> userList;
 
         public ContactAdapter(List<User> userList) {
             this.userList = userList;
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder{
             private TextView userName;
             private TextView phoneNumber;
             private ImageButton starButton;
@@ -113,7 +113,7 @@ public class Contact extends Fragment{
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contact, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contact,parent,false);
             return new ViewHolder(view);
         }
 
@@ -127,7 +127,6 @@ public class Contact extends Fragment{
             }
             holder.userName.setText(user.getName() == null ? "Undefined" : user.getName());
             holder.phoneNumber.setText(user.getPhoneNumber());
-            Log.d("Marc","FAVORITE " + user.getName()+" favorito " + user.getFavorite());
             holder.starButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
