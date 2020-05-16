@@ -43,7 +43,8 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
 
 
     @Override
-    public void storeAlert(Alert alert, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void storeAlert(String latitude, String longitude, Response.Listener listener, Response.ErrorListener errorListener) {
+        Alert alert = generateAlert(latitude, longitude);
         RequestQueue queue = Volley.newRequestQueue(context);
         Gson gson = new Gson();
         String j = gson.toJson(alert);
@@ -104,5 +105,21 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL_API+"Login", parameters, listener, errorListener);
         Log.d("administrador", jsonRequest.toString());
         queue.add(jsonRequest);
+    }
+
+    @Override
+    public Alert generateAlert(String latitude, String longitude) {
+        Alert alert = new Alert();
+        User user = new User();
+        user.setPhoneNumber("654023488");
+        alert.setUsuario(user);
+        Ubication ubication = new Ubication();
+        ubication.setAltitude(longitude);
+        ubication.setLatitude(latitude);
+        alert.getTo().add("618638042");
+        alert.getTo().add("654023488");
+        alert.getTo().add("608816327");
+        alert.setUbication(ubication);
+        return alert;
     }
 }

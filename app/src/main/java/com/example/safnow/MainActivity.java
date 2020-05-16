@@ -33,18 +33,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         checkToken();
+        /*
         SafnowAppDao safnowAppDao = SafnowAppDaoImpl.getInstance(this);
-        Alert alert = new Alert();
-        alert.setName("Ayudame Por favor");
-        User user = new User();
-        user.setPhoneNumber("654023488");
-        alert.setUsuario(user);
-        Ubication ubication = new Ubication();
-        ubication.setAltitude("434354");
-        ubication.setLatitude("564546546");
-        alert.getTo().add("64324565");
-        alert.getTo().add("65456578");
-        alert.setUbication(ubication);
+
         safnowAppDao.storeAlert(alert, new Response.Listener() {
             @Override
             public void onResponse(Object response) {
@@ -56,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+         */
         //AskNotificationTimer notification = new AskNotificationTimer(this, 5000);
     }
 
@@ -64,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void checkToken() {
         PreferencesController preferencesController = PreferencesController.getInstance();
-        if (preferencesController.getToken(MainActivity.this) == null) {
+       /* if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
+        */
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 
 
