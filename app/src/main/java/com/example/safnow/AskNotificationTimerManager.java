@@ -16,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class AskNotificationTimer {
+public class AskNotificationTimerManager {
 
     private Activity activity;
     private long time;
@@ -24,20 +24,20 @@ public class AskNotificationTimer {
     private TimerTask task;
     private Timer timerNotification;
     private TimerTask taskNotification;
-    private static AskNotificationTimer askNotificationTimer;
+    private static AskNotificationTimerManager askNotificationTimerManager;
 
 
-    public static AskNotificationTimer getInstance(Activity activity, long time) {
-        askNotificationTimer = new AskNotificationTimer(activity, time);
-        return askNotificationTimer;
+    public static AskNotificationTimerManager getInstance(Activity activity, long time) {
+        askNotificationTimerManager = new AskNotificationTimerManager(activity, time);
+        return askNotificationTimerManager;
     }
 
-    public static AskNotificationTimer getInstance() {
-        return askNotificationTimer;
+    public static AskNotificationTimerManager getInstance() {
+        return askNotificationTimerManager;
     }
 
 
-    private AskNotificationTimer(final Activity activity, long time) {
+    private AskNotificationTimerManager(final Activity activity, long time) {
         this.activity = activity;
         this.time = time;
         this.timer = new Timer();
@@ -81,7 +81,7 @@ public class AskNotificationTimer {
         this.removeNotification();
         PreferencesController controller = PreferencesController.getInstance();
         controller.setTimerNotificationActive(activity, false);
-        // TODO create alarm
+        AlarmNotificationManager alarmNotificationManager = AlarmNotificationManager.getInstance(activity, true);
     }
 
     /**
@@ -100,7 +100,7 @@ public class AskNotificationTimer {
     private void createNotification(final Activity activity) {
         NotificationChannel channel = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            channel = new NotificationChannel("1", "TimerChannel", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = activity.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -114,7 +114,6 @@ public class AskNotificationTimer {
         taskNotification = new TimerTask() {
             @Override
             public void run() {
-                Log.d("administrador", "Alarma!!");
                 createAndSetAlarm();
             }
         };
@@ -146,6 +145,7 @@ public class AskNotificationTimer {
                 .setContentTitle("IMPORTANTE")
                 .setContentText("¿Estás bien?")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setOngoing(true)
                 .addAction(R.drawable.contacts_icon, "SI", yesPendingIntent)
                 .addAction(R.drawable.contacts_icon, "NO", noPendingIntent);
     }

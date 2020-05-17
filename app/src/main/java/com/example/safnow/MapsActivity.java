@@ -69,6 +69,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         super.onAttach(context);
         this.context = context;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,33 +85,10 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getContext(), "SOS", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                showNotification();
-                manager.storeAlert(latitude, longitude);
+                AlarmNotificationManager alarmNotificationManager = AlarmNotificationManager.getInstance(context, true);
             }
         });
         return view;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void showNotification() {
-        NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "1")
-                .setSmallIcon(R.drawable.contacts_icon)
-                .setContentTitle("MENSAJE DE ALERTA")
-                .setContentText("Mensaje de alerta activado")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        notificationManager.notify(1, builder.build());
     }
 
     @Override

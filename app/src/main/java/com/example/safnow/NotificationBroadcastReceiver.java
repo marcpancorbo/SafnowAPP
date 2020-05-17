@@ -15,18 +15,18 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onReceive(Context context, Intent intent) {
-        AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance();
+        AskNotificationTimerManager askNotificationTimerManager = AskNotificationTimerManager.getInstance();
         Log.d("administrador", "Ha llegado receiver");
         String type = intent.getType();
         if (type != null) {
             switch (type) {
                 case "SI":
-                    askNotificationTimer.cancelCheckTime();
-                    askNotificationTimer.removeNotification();
+                    askNotificationTimerManager.cancelCheckTime();
+                    askNotificationTimerManager.removeNotification();
                     break;
                 case "NO":
                     Log.d("administrador", "ALARMA!!!");
-                    askNotificationTimer.createAndSetAlarm();
+                    askNotificationTimerManager.createAndSetAlarm();
                     break;
                 default:
                     break;

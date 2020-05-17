@@ -202,15 +202,15 @@ public class SettingsActivity extends Fragment {
         controller.setTimerNotificationActive(getContext(), timeSwitchBoolean);
         if (timeSwitchBoolean) {
             long time = Integer.parseInt(spinnerItem) * 60000; //Convert to miliseconds
-            AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance(getActivity(), time);
+            AskNotificationTimerManager askNotificationTimerManager = AskNotificationTimerManager.getInstance(getActivity(), time);
             Toast.makeText(getContext(), "Has activado el timer", Toast.LENGTH_SHORT).show();
         } else {
-            AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance();
-            if (askNotificationTimer != null) {
+            AskNotificationTimerManager askNotificationTimerManager = AskNotificationTimerManager.getInstance();
+            if (askNotificationTimerManager != null) {
                 Toast.makeText(getContext(), "Has cancelado el timer", Toast.LENGTH_SHORT).show();
-                askNotificationTimer.cancelCheckTime();
-                askNotificationTimer.cancelNotification();
-                askNotificationTimer.removeNotification();
+                askNotificationTimerManager.cancelCheckTime();
+                askNotificationTimerManager.cancelNotification();
+                askNotificationTimerManager.removeNotification();
             }
         }
     }
