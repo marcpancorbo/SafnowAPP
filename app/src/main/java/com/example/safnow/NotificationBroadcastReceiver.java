@@ -27,7 +27,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 case "NO":
                     Log.d("administrador", "ALARMA!!!");
                     askNotificationTimerManager.createAndSetAlarm();
-                    AlarmNotificationManager alarmNotificationManager = AlarmNotificationManager.getInstance(context, true);
                     break;
                 default:
                     break;
