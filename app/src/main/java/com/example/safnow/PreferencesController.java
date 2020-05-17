@@ -115,7 +115,10 @@ public class PreferencesController {
 
     public Set<String> getContactsFavorite(Context context){
         preferences = context.getSharedPreferences(context.getPackageName(),MODE_PRIVATE);
-        set.addAll(preferences.getStringSet("contactsFav",null));
+        Set<String> contacts = preferences.getStringSet("contactsFav", null);
+        if (contacts != null){
+            set.addAll(contacts);
+        }
         return set;
     }
 
