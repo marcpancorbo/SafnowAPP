@@ -2,6 +2,11 @@ package com.example.safnow;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -9,7 +14,7 @@ public class PreferencesController {
 
     private static PreferencesController preferencesController;
     SharedPreferences preferences;
-
+    Set<String> set = new HashSet<String>();
 
     public static PreferencesController getInstance() {
         if (preferencesController == null) {
@@ -90,5 +95,33 @@ public class PreferencesController {
         return preferences.getBoolean("timerActive", false);
     }
 
+
+    public void setContactFavorite(Context context,String contactsFav){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        set.add(contactsFav);
+        editor.putStringSet("contactsFav",set);
+        editor.apply();
+        for(String a: set){
+            Log.d("MARC","CONTACS FAV " + a);
+        }
+    }
+
+    public void deleteContactFav(Context context, String number){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        set.remove(number);
+        Log.d("MARC","NUMERO BORRAR: " + number);
+        editor.putStringSet("contactsFav",set);
+        editor.apply();
+       Log.d("MARC","NUMEROS GUARDADOS: " + set);
+    }
+
+
+    public Set<String> getContactsFavorite(Context context){
+        preferences = context.getSharedPreferences(context.getPackageName(),MODE_PRIVATE);
+        set.addAll(preferences.getStringSet("contactsFav",null));
+        return set;
+    }
 
 }
