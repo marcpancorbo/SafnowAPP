@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -98,11 +100,13 @@ public class Contact extends Fragment{
         class ViewHolder extends RecyclerView.ViewHolder{
             private TextView userName;
             private TextView phoneNumber;
-
+            private ImageButton starButton;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.userName = itemView.findViewById(R.id.first_text_view);
                 this.phoneNumber = itemView.findViewById(R.id.second_text_view);
+                this.starButton = itemView.findViewById(R.id.starButton);
+
             }
         }
 
@@ -116,8 +120,26 @@ public class Contact extends Fragment{
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             User user = userList.get(position);
-            holder.userName.setText(user.getName() == null ? "Undefined":user.getName());
+            if(user.getFavorite()){
+                holder.starButton.setImageResource(R.drawable.star_icon);
+            }else{
+                holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
+            }
+            holder.userName.setText(user.getName() == null ? "Undefined" : user.getName());
             holder.phoneNumber.setText(user.getPhoneNumber());
+            holder.starButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(user.getFavorite()){
+                        holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
+                        user.setFavorite(false);
+                    }else{
+                        holder.starButton.setImageResource(R.drawable.star_icon);
+                        user.setFavorite(true);
+                    }
+                }
+            });
+
         }
 
 
