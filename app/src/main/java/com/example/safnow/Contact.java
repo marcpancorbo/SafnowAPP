@@ -126,7 +126,6 @@ public class Contact extends Fragment {
                     if (contactsFavShared.contains(u.getPhoneNumber())) {
                         if (u.getPhoneNumber().equalsIgnoreCase(user.getPhoneNumber())) {
                             user.setFavorite(true);
-                            Log.d("MARC", "CONTACT FAV LIST " + u.getPhoneNumber());
                         }
                     }
                 }

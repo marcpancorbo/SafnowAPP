@@ -102,19 +102,14 @@ public class PreferencesController {
         set.add(contactsFav);
         editor.putStringSet("contactsFav",set);
         editor.apply();
-        for(String a: set){
-            Log.d("MARC","CONTACS FAV " + a);
-        }
     }
 
     public void deleteContactFav(Context context, String number){
         preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         set.remove(number);
-        Log.d("MARC","NUMERO BORRAR: " + number);
         editor.putStringSet("contactsFav",set);
         editor.apply();
-       Log.d("MARC","NUMEROS GUARDADOS: " + set);
     }
 
 
