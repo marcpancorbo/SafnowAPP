@@ -72,6 +72,28 @@ public class AskNotificationTimer {
     }
 
     /**
+     * Method that allows to cancel completely the notification and set the state to Alarm
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void createAndSetAlarm() {
+        this.cancelCheckTime();
+        this.cancelNotification();
+        this.removeNotification();
+        PreferencesController controller = PreferencesController.getInstance();
+        controller.setTimerNotificationActive(activity, false);
+        // TODO create alarm
+    }
+
+    /**
+     * Method that allows to remove the notification
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void removeNotification() {
+        NotificationManager notificationManager = activity.getSystemService(NotificationManager.class);
+        notificationManager.cancel(1);
+    }
+
+    /**
      * Metodo que permite crear la notificacion de pregunta que se ejecutara cada cierto tiempo
      */
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -92,13 +114,8 @@ public class AskNotificationTimer {
         taskNotification = new TimerTask() {
             @Override
             public void run() {
-                // Metodo de alarma manager
                 Log.d("administrador", "Alarma!!");
-                notificationManager.cancel(1);
-                cancelCheckTime();
-                cancelNotification();
-                PreferencesController controller = PreferencesController.getInstance();
-                controller.setTimerNotificationActive(activity, false);
+                createAndSetAlarm();
             }
         };
         timerNotification.schedule(taskNotification, 30000);

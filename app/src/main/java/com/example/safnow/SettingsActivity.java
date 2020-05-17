@@ -2,14 +2,12 @@ package com.example.safnow;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -175,6 +174,7 @@ public class SettingsActivity extends Fragment {
                 .setTitle("Timer");
 
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(DialogInterface dialog, int id) {
                 configureTimer(spinner.getSelectedItem().toString(), timeSwitch.isChecked());
             }
@@ -195,6 +195,7 @@ public class SettingsActivity extends Fragment {
      * @param spinnerItem       Receive the string which contains the time between notifications
      * @param timeSwitchBoolean Receive the boolean which controls if timer notifications is activated
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void configureTimer(String spinnerItem, boolean timeSwitchBoolean) {
         PreferencesController controller = PreferencesController.getInstance();
         controller.setTimerNotification(getContext(), Integer.parseInt(spinnerItem));
@@ -209,6 +210,7 @@ public class SettingsActivity extends Fragment {
                 Toast.makeText(getContext(), "Has cancelado el timer", Toast.LENGTH_SHORT).show();
                 askNotificationTimer.cancelCheckTime();
                 askNotificationTimer.cancelNotification();
+                askNotificationTimer.removeNotification();
             }
         }
     }

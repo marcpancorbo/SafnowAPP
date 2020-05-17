@@ -1,10 +1,6 @@
 package com.example.safnow;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -20,17 +16,17 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         AskNotificationTimer askNotificationTimer = AskNotificationTimer.getInstance();
-        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         Log.d("administrador", "Ha llegado receiver");
         String type = intent.getType();
         if (type != null) {
             switch (type) {
                 case "SI":
                     askNotificationTimer.cancelCheckTime();
-                    notificationManager.cancel(1);
+                    askNotificationTimer.removeNotification();
                     break;
                 case "NO":
                     Log.d("administrador", "ALARMA!!!");
+                    askNotificationTimer.createAndSetAlarm();
                     break;
                 default:
                     break;
