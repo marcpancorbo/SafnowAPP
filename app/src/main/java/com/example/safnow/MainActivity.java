@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        showNotification();
+        checkToken();
     }
 
 
@@ -38,12 +40,36 @@ public class MainActivity extends AppCompatActivity {
      * Method that allows to check if exists a user token and decides which activity display
      */
     private void checkToken() {
+      /*
         PreferencesController preferencesController = PreferencesController.getInstance();
-        if (preferencesController.getToken(MainActivity.this) == null) {
+         if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
+       */
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
+
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void showNotification() {
+        NotificationChannel channel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.drawable.contacts_icon)
+                .setContentTitle("prueba")
+                .setContentText("prueba")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+    }
 
 }

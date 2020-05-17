@@ -3,6 +3,9 @@ package com.example.safnow;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class PreferencesController {
@@ -11,12 +14,18 @@ public class PreferencesController {
     SharedPreferences preferences;
 
 
+    Set<String> contactsSet = new HashSet<String>();
+
     public static PreferencesController getInstance() {
         if (preferencesController == null) {
             preferencesController = new PreferencesController();
         }
         return preferencesController;
     }
+    public Set<String> getContactsSet() {
+        return contactsSet;
+    }
+
 
     /**
      * Method that allows to save the user token in shared preferences
@@ -90,5 +99,31 @@ public class PreferencesController {
         return preferences.getBoolean("timerActive", false);
     }
 
+
+    public void setContactFavorite(Context context,String contactsFav){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        contactsSet.add(contactsFav);
+        editor.putStringSet("contactsFav", contactsSet);
+        editor.apply();
+    }
+
+    public void deleteContactFav(Context context, String number){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        contactsSet.remove(number);
+        editor.putStringSet("contactsFav", contactsSet);
+        editor.apply();
+    }
+
+
+    public Set<String> getContactsFavorite(Context context){
+        preferences = context.getSharedPreferences(context.getPackageName(),MODE_PRIVATE);
+        Set<String> contacts = preferences.getStringSet("contactsFav", null);
+        if (contacts != null){
+            contactsSet.addAll(contacts);
+        }
+        return contactsSet;
+    }
 
 }

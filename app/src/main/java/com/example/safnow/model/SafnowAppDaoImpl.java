@@ -116,7 +116,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
         Ubication ubication = new Ubication();
         ubication.setAltitude(longitude);
         ubication.setLatitude(latitude);
-        alert.getTo().add("654023488");
+        alert.setTo(PreferencesController.getInstance().getContactsSet());
         alert.setUbication(ubication);
         return alert;
     }

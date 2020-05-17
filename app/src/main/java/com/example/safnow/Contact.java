@@ -2,7 +2,6 @@ package com.example.safnow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,38 +9,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.service.notification.NotificationListenerService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.safnow.model.User;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Contact extends Fragment{
-    private static final String[] PROJECTION = new String[] {
+public class Contact extends Fragment {
+    private static final String[] PROJECTION = new String[]{
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
             ContactsContract.Contacts.DISPLAY_NAME,
             ContactsContract.CommonDataKinds.Phone.NUMBER
     };
 
     private RecyclerView rv;
+
     public Contact() {
         // Required empty public constructor
     }
@@ -57,7 +54,7 @@ public class Contact extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.activity_contact, container, false);
-        if( this.getContext().getApplicationContext().checkSelfPermission( Manifest.permission.READ_CONTACTS ) != PackageManager.PERMISSION_GRANTED )
+        if (this.getContext().getApplicationContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.READ_CONTACTS}, 1);
         this.rv = root.findViewById(R.id.recyclerView);
         List<User> users = GetAllContacts().stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
@@ -65,8 +62,9 @@ public class Contact extends Fragment{
         rv.setAdapter(new ContactAdapter(users));
         return root;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public List<User> GetAllContacts(){
+    public List<User> GetAllContacts() {
         ContentResolver cr = this.getContext().getContentResolver();
         List<User> users = new ArrayList<>();
         Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, null, null, null);
@@ -90,17 +88,18 @@ public class Contact extends Fragment{
         return users;
     }
 
-    class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder>{
+    class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
         private List<User> userList;
 
         public ContactAdapter(List<User> userList) {
             this.userList = userList;
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
             private TextView userName;
             private TextView phoneNumber;
             private ImageButton starButton;
+
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.userName = itemView.findViewById(R.id.first_text_view);
@@ -113,16 +112,28 @@ public class Contact extends Fragment{
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contact,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contact, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             User user = userList.get(position);
-            if(user.getFavorite()){
+            PreferencesController preferencesController = PreferencesController.getInstance();
+            Set<String> contactsFavShared = preferencesController.getContactsFavorite(Objects.requireNonNull(getContext()));
+            if (!contactsFavShared.isEmpty()) {
+                for (User u : userList) {
+                    if (contactsFavShared.contains(u.getPhoneNumber())) {
+                        if (u.getPhoneNumber().equalsIgnoreCase(user.getPhoneNumber())) {
+                            user.setFavorite(true);
+                        }
+                    }
+                }
+            }
+
+            if (user.getFavorite()) {
                 holder.starButton.setImageResource(R.drawable.star_icon);
-            }else{
+            } else {
                 holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
             }
             holder.userName.setText(user.getName() == null ? "Undefined" : user.getName());
@@ -130,15 +141,18 @@ public class Contact extends Fragment{
             holder.starButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(user.getFavorite()){
+                    if (user.getFavorite()) {
                         holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
                         user.setFavorite(false);
-                    }else{
+                        preferencesController.deleteContactFav(Objects.requireNonNull(getContext()),user.getPhoneNumber());
+                    } else {
                         holder.starButton.setImageResource(R.drawable.star_icon);
                         user.setFavorite(true);
+                        preferencesController.setContactFavorite(Objects.requireNonNull(getContext()), user.getPhoneNumber());
                     }
                 }
             });
+
 
         }
 
