@@ -66,5 +66,29 @@ public class PreferencesController {
         return preferences.getInt("timer", -1);
     }
 
+    /**
+     * Method that allows to save if timer notifications are active
+     *
+     * @param context Receives the context of the call
+     * @param active  Receives the boolean
+     */
+    public void setTimerNotificationActive(Context context, boolean active) {
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("timerActive", active);
+        editor.apply();
+    }
+
+    /**
+     * Method that allows to get from the shared preferences if the time notifications are activated
+     *
+     * @param context Receives the context of the call
+     * @return Return the boolean or false if no exist
+     */
+    public boolean getTimerNotificationActive(Context context) {
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        return preferences.getBoolean("timerActive", false);
+    }
+
 
 }
