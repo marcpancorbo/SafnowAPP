@@ -92,6 +92,7 @@ public class AskNotificationTimer {
         taskNotification = new TimerTask() {
             @Override
             public void run() {
+                // Metodo de alarma manager
                 Log.d("administrador", "Alarma!!");
                 notificationManager.cancel(1);
                 cancelCheckTime();
