@@ -120,6 +120,7 @@ public class Contact extends Fragment{
             holder.phoneNumber.setText(user.getPhoneNumber());
         }
 
+
         @Override
         public int getItemCount() {
             return userList.size();

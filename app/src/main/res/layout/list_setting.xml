@@ -23,6 +23,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/IVicon"
+            android:layout_width="75dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            app:srcCompat="@drawable/temporizador" />
+
         <LinearLayout
             android:id="@+id/lines_container"
             android:layout_width="wrap_content"
@@ -48,22 +58,12 @@
 
             <TextView
                 android:id="@+id/textDescription"
-                android:layout_width="184dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="80dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/IVicon"
-            android:layout_width="75dp"
-            android:layout_height="62dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="false"
-            app:srcCompat="@drawable/temporizador" />
 
         <!-- Can be replaced by a widget -->
     </RelativeLayout>
