@@ -1,7 +1,9 @@
 package com.example.safnow.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class  Alert {
 
@@ -9,7 +11,7 @@ public class  Alert {
     private String phoneDest;
     private User usuario;
     private Ubication ubication;
-    public List<String> To = new ArrayList<>();
+    public Set<String> To = new HashSet<>();
 
 
     public String getName() {
@@ -44,11 +46,11 @@ public class  Alert {
         this.ubication = ubication;
     }
 
-    public List<String> getTo() {
+    public Set<String> getTo() {
         return To;
     }
 
-    public void setTo(List<String> to) {
+    public void setTo(Set<String> to) {
         To = to;
     }
 }

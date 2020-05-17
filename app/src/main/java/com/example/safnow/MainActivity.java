@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         showNotification();
+        checkToken();
     }
 
 
@@ -39,11 +40,16 @@ public class MainActivity extends AppCompatActivity {
      * Method that allows to check if exists a user token and decides which activity display
      */
     private void checkToken() {
+      /*
         PreferencesController preferencesController = PreferencesController.getInstance();
-        if (preferencesController.getToken(MainActivity.this) == null) {
+         if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
+       */
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
+
     }
 
 

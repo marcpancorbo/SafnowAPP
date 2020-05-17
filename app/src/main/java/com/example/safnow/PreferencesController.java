@@ -2,9 +2,7 @@ package com.example.safnow;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +12,9 @@ public class PreferencesController {
 
     private static PreferencesController preferencesController;
     SharedPreferences preferences;
-    Set<String> set = new HashSet<String>();
+
+
+    Set<String> contactsSet = new HashSet<String>();
 
     public static PreferencesController getInstance() {
         if (preferencesController == null) {
@@ -22,6 +22,10 @@ public class PreferencesController {
         }
         return preferencesController;
     }
+    public Set<String> getContactsSet() {
+        return contactsSet;
+    }
+
 
     /**
      * Method that allows to save the user token in shared preferences
@@ -99,16 +103,16 @@ public class PreferencesController {
     public void setContactFavorite(Context context,String contactsFav){
         preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        set.add(contactsFav);
-        editor.putStringSet("contactsFav",set);
+        contactsSet.add(contactsFav);
+        editor.putStringSet("contactsFav", contactsSet);
         editor.apply();
     }
 
     public void deleteContactFav(Context context, String number){
         preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        set.remove(number);
-        editor.putStringSet("contactsFav",set);
+        contactsSet.remove(number);
+        editor.putStringSet("contactsFav", contactsSet);
         editor.apply();
     }
 
@@ -117,9 +121,9 @@ public class PreferencesController {
         preferences = context.getSharedPreferences(context.getPackageName(),MODE_PRIVATE);
         Set<String> contacts = preferences.getStringSet("contactsFav", null);
         if (contacts != null){
-            set.addAll(contacts);
+            contactsSet.addAll(contacts);
         }
-        return set;
+        return contactsSet;
     }
 
 }
