@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.safnow.model.User;
 
@@ -129,6 +130,10 @@ public class Contact extends Fragment {
                         }
                     }
                 }
+            }else{
+                userList.get(0).setFavorite(true);
+                Toast toast = Toast.makeText(Objects.requireNonNull(getContext()),"Se ha marcado de forma predetermina el primer contacto como favorito",Toast.LENGTH_LONG);
+                toast.show();
             }
 
             if (user.getFavorite()) {
@@ -142,9 +147,14 @@ public class Contact extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (user.getFavorite()) {
-                        holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
-                        user.setFavorite(false);
-                        preferencesController.deleteContactFav(Objects.requireNonNull(getContext()),user.getPhoneNumber());
+                        if (contactsFavShared.size() == 1) {
+                            Toast toast = Toast.makeText(Objects.requireNonNull(getContext()), "Has de tener mínimo un contacto marcado", Toast.LENGTH_LONG);
+                            toast.show();
+                        } else {
+                            holder.starButton.setImageResource(R.drawable.star_icon_sin_fondo);
+                            user.setFavorite(false);
+                            preferencesController.deleteContactFav(Objects.requireNonNull(getContext()), user.getPhoneNumber());
+                        }
                     } else {
                         holder.starButton.setImageResource(R.drawable.star_icon);
                         user.setFavorite(true);
