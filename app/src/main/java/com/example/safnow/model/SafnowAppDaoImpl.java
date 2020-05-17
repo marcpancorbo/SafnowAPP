@@ -111,7 +111,7 @@ public class SafnowAppDaoImpl implements SafnowAppDao {
     public Alert generateAlert(String latitude, String longitude) {
         Alert alert = new Alert();
         User user = new User();
-        user.setPhoneNumber("654023488");
+        user.setPhoneNumber(PreferencesController.getInstance().getPhoneNumber(context));
         alert.setUsuario(user);
         Ubication ubication = new Ubication();
         ubication.setAltitude(longitude);

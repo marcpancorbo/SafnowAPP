@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean name_set = false;
     private TextView code;
     private User user = new User();
-
+    private PreferencesController preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         code = findViewById(R.id.tvCode2);
         code.setEnabled(false);
         code.setVisibility(View.INVISIBLE);
+        preferences = PreferencesController.getInstance();
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                         SafnowAppDaoImpl safnowAppDaoImp = SafnowAppDaoImpl.getInstance(RegisterActivity.this);
                         user.setName(name.getText().toString());
                         user.setPhoneNumber(phoneNumber.getText().toString());
+                        preferences.addPhoneNumber(RegisterActivity.this, phoneNumber.getText().toString());
                         Log.d("administrador",user.getPhoneNumber());
                         safnowAppDaoImp.storeUser(user, new Response.Listener<JSONObject>() {
                             @Override

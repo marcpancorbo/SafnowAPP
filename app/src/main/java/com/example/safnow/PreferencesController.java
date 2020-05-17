@@ -64,6 +64,18 @@ public class PreferencesController {
         editor.apply();
     }
 
+    public void addPhoneNumber(Context context, String number){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("phoneNumber", number);
+        editor.apply();
+    }
+
+    public String getPhoneNumber(Context context){
+        preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        return preferences.getString("phoneNumber", null);
+    }
+
     /**
      * Method that allows to get from the shared preferences the time between notifications
      *

@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter pageAdapter;
+    static Context context;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        context = getContext();
         showNotification();
         checkToken();
     }
@@ -40,16 +42,15 @@ public class MainActivity extends AppCompatActivity {
      * Method that allows to check if exists a user token and decides which activity display
      */
     private void checkToken() {
-      /*
-        PreferencesController preferencesController = PreferencesController.getInstance();
+        /*
+          PreferencesController preferencesController = PreferencesController.getInstance();
          if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
-       */
+         */
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
-
     }
 
 
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, builder.build());
+    }
+    public  Context getContext(){
+        return context;
     }
 
 }
