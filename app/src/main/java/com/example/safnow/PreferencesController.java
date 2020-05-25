@@ -123,9 +123,11 @@ public class PreferencesController {
     public void deleteContactFav(Context context, String number){
         preferences = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        contactsSet.remove(number);
-        editor.putStringSet("contactsFav", contactsSet);
-        editor.apply();
+        if(contactsSet.size()>1) {
+            contactsSet.remove(number);
+            editor.putStringSet("contactsFav", contactsSet);
+            editor.apply();
+        }
     }
 
 
