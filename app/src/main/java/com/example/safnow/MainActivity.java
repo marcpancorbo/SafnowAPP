@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         context = getContext();
-        showNotification();
         checkToken();
     }
 
@@ -49,29 +48,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
          */
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        //startActivity(intent);
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void showNotification() {
-        NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel("1", "pruebaCanal", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.contacts_icon)
-                .setContentTitle("prueba")
-                .setContentText("prueba")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
-    }
     public  Context getContext(){
         return context;
     }

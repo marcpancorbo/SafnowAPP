@@ -25,7 +25,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                     askNotificationTimerManager.removeNotification();
                     break;
                 case "NO":
-                    Log.d("administrador", "ALARMA!!!");
                     askNotificationTimerManager.createAndSetAlarm();
                     break;
                 default:
