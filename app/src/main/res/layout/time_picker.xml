@@ -24,7 +24,7 @@
         android:layout_height="39dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Activado"
+        android:text="@string/activated"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +34,7 @@
         android:layout_height="21dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="85dp"
-        android:text="Minutos"
+        android:text="@string/minutes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

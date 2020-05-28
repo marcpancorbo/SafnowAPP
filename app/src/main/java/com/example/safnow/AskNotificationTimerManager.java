@@ -142,12 +142,12 @@ public class AskNotificationTimerManager {
 
         return new NotificationCompat.Builder(activity, "1")
                 .setSmallIcon(R.drawable.contacts_icon)
-                .setContentTitle("IMPORTANTE")
-                .setContentText("¿Estás bien?")
+                .setContentTitle(activity.getApplicationContext().getString(R.string.important))
+                .setContentText(activity.getApplicationContext().getString(R.string.are_ok))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOngoing(true)
-                .addAction(R.drawable.contacts_icon, "SI", yesPendingIntent)
-                .addAction(R.drawable.contacts_icon, "NO", noPendingIntent);
+                .addAction(R.drawable.contacts_icon, activity.getApplicationContext().getString(R.string.yes), yesPendingIntent)
+                .addAction(R.drawable.contacts_icon, activity.getApplicationContext().getString(R.string.no), noPendingIntent);
     }
 
 }

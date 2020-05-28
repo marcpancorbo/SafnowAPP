@@ -84,8 +84,8 @@ public class AlarmNotificationManager {
     private NotificationCompat.Builder setNotificationBuilder(Context context) {
         return new NotificationCompat.Builder(context, "2")
                 .setSmallIcon(R.drawable.contacts_icon)
-                .setContentTitle("IMPORTANTE")
-                .setContentText("SE HA ACTIVADO LA ALARMA")
+                .setContentTitle(context.getString(R.string.important))
+                .setContentText(context.getString(R.string.active_alarm))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 

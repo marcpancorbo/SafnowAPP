@@ -1,18 +1,33 @@
 package com.example.safnow;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,11 +38,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SettingsActivity extends Fragment {
 
     private RecyclerView rv;
-    private final String TEMPORIZADOR = "Temporizador";
+    private  String TEMPORIZADOR = "Temporizador";
+    private  String VIDEOTUTORIAL = "Video tutorial";
 
     public SettingsActivity() {
         // Required empty public constructor
@@ -46,11 +63,15 @@ public class SettingsActivity extends Fragment {
         this.rv = root.findViewById(R.id.recyclerViewSettings);
         List<Option> options = new ArrayList<>();
         Option option = new Option();
-        option.setName(TEMPORIZADOR);
-        option.setDescription("Personaliza el tiempo entre notificacion");
+        option.setName(Objects.requireNonNull(getContext()).getResources().getString(R.string.timer));
+        option.setDescription(Objects.requireNonNull(getContext()).getResources().getString(R.string.personalize));
         option.setIcon(R.drawable.temporizador);
         options.add(option);
-
+        Option videoOption = new Option();
+        videoOption.setName(Objects.requireNonNull(getContext()).getResources().getString(R.string.video_tutorial));
+        videoOption.setDescription(Objects.requireNonNull(getContext()).getResources().getString(R.string.utilidad_app));
+        videoOption.setIcon(R.drawable.video_icon);
+        options.add(videoOption);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(new SettingAdapter(options));
         return root;
@@ -77,9 +98,12 @@ public class SettingsActivity extends Fragment {
                     @Override
                     public void onClick(View view) {
                         int position = getAdapterPosition();
-                        switch (options.get(position).getName()) {
-                            case TEMPORIZADOR:
+                        switch (position) {
+                            case 0:
                                 openTimeSelector();
+                                break;
+                            case 1:
+                                openVideoTutorial();
                                 break;
                             default:
                                 break;
@@ -90,9 +114,12 @@ public class SettingsActivity extends Fragment {
                     @Override
                     public void onClick(View view) {
                         int position = getAdapterPosition();
-                        switch (options.get(position).getName()) {
-                            case TEMPORIZADOR:
+                        switch (position) {
+                            case 0:
                                 openTimeSelector();
+                                break;
+                            case 1:
+                                openVideoTutorial();
                                 break;
                             default:
                                 break;
@@ -103,9 +130,12 @@ public class SettingsActivity extends Fragment {
                     @Override
                     public void onClick(View view) {
                         int position = getAdapterPosition();
-                        switch (options.get(position).getName()) {
-                            case TEMPORIZADOR:
+                        switch (position) {
+                            case 0:
                                 openTimeSelector();
+                                break;
+                            case 1:
+                                openVideoTutorial();
                                 break;
                             default:
                                 break;
@@ -126,8 +156,8 @@ public class SettingsActivity extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Option option = options.get(position);
             holder.textName.setText(option.getName());
-            //TODO Poder guardar un icono en el objeto option para poder rellenar dinamicamente el imageview
             holder.textDescription.setText(option.getDescription());
+            holder.icon.setImageResource(option.icon);
         }
 
         @Override
@@ -136,6 +166,24 @@ public class SettingsActivity extends Fragment {
         }
 
     }
+
+    private void openVideoTutorial() {
+        final VideoView videosafnow = new VideoView(getContext());
+        Uri uri = Uri.parse("android.resource://"+getActivity().getPackageName()+"/"+R.raw.tutorial_safnow);
+        MediaController mediacontroller = new MediaController(getActivity());
+        mediacontroller.setAnchorView(videosafnow);
+        videosafnow.setMediaController(mediacontroller);
+        videosafnow.setVideoURI(uri);
+        videosafnow.requestFocus();
+        videosafnow.start();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setTitle(R.string.video_tutorial);
+        alertDialogBuilder.setMessage(R.string.utilidad_app);
+        alertDialogBuilder.setView(videosafnow);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     private void openTimeSelector() {
         final PreferencesController controller = PreferencesController.getInstance();
@@ -170,16 +218,16 @@ public class SettingsActivity extends Fragment {
         timeSwitch.setChecked(notificationActive);
 
 
-        builder.setMessage("Selecciona el tiempo: ")
-                .setTitle("Timer");
+        builder.setMessage(getContext().getString(R.string.selectTime))
+                .setTitle(getContext().getString(R.string.timer));
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getContext().getString(R.string.accept), new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(DialogInterface dialog, int id) {
                 configureTimer(spinner.getSelectedItem().toString(), timeSwitch.isChecked());
             }
         });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
@@ -246,6 +294,5 @@ public class SettingsActivity extends Fragment {
             this.icon = icon;
         }
     }
-
 
 }

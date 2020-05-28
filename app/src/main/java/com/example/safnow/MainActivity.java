@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -28,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigator);
         ViewPager viewPager = findViewById(R.id.vpPager);
-        pageAdapter = new PageAdapter(getSupportFragmentManager());
+        pageAdapter = new PageAdapter(getSupportFragmentManager(),getApplicationContext());
         viewPager.setAdapter(pageAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
         context = getContext();
         showNotification();
-        checkToken();
+        //checkToken();
     }
 
 
@@ -42,13 +41,11 @@ public class MainActivity extends AppCompatActivity {
      * Method that allows to check if exists a user token and decides which activity display
      */
     private void checkToken() {
-        /*
           PreferencesController preferencesController = PreferencesController.getInstance();
          if (preferencesController.getToken(MainActivity.this) == null) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
-         */
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.contacts_icon)
+                .setSmallIcon(R.mipmap.safnow_logo_round)
                 .setContentTitle("prueba")
                 .setContentText("prueba")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

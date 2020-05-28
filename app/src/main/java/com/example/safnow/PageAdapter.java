@@ -1,5 +1,6 @@
 package com.example.safnow;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,9 +11,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class PageAdapter extends FragmentPagerAdapter {
     private int numOfTabs = 3;
-
-    public PageAdapter(FragmentManager fm){
+    private Context context;
+    public PageAdapter(FragmentManager fm,Context context){
         super(fm);
+        this.context=context;
     }
     @NonNull
     @Override
@@ -40,11 +42,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return  "Settings";
+                return  context.getString(R.string.action_settings);
             case 1:
-                return "Map";
+                return context.getString(R.string.title_activity_maps);
             case 2:
-                return "Contacts";
+                return context.getString(R.string.contacts);
             default:
                 return null;
         }

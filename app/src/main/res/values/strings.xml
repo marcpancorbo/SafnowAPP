@@ -13,7 +13,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="contacts">Contacts</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -24,6 +24,18 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_maps">Map</string>
-
-
+    <string name="video_tutorial">Video-tutorial Safnow</string>
+    <string name="utilidad_app">How to use Safnow</string>
+    <string name="timer">Timer</string>
+    <string name="personalize">Customize the time between notification </string>
+    <string name="important">Important</string>
+    <string name="active_alarm">Alarm has been activated</string>
+    <string name="are_ok">Are you ok?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="selectTime">Select your time:</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="activated">Activated</string>
+    <string name="minutes">Minutes</string>
 </resources>

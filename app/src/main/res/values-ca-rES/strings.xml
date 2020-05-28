@@ -7,5 +7,37 @@
     <string name="Information">Introdueix les teves dades</string>
     <string name="InputToast">El nom i el telèfon no poden quedar buits</string>
     <string name="code">Codi</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configuració</string>
+    <string name="contacts">Contactes</string>
 
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_activity_tabs">TabsActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="video_tutorial">Vídeo tutorial Safnow</string>
+    <string name="utilidad_app">Com utilitzar Safnow</string>
+    <string name="timer">Temporitzador</string>
+    <string name="personalize">Personalitza el temps entre notificació </string>
+    <string name="important">Important</string>
+    <string name="active_alarm">Alarma activada</string>
+    <string name="are_ok">Estàs bé</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="selectTime">Selecciona el temps:</string>
+    <string name="accept">Acceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="activated">Activat</string>
+    <string name="minutes">Minuts</string>
 </resources>

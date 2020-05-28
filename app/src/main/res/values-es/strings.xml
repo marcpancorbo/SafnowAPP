@@ -7,5 +7,37 @@
     <string name="Information">Introduce tus datos</string>
     <string name="InputToast">El nombre y el teléfono no pueden quedar vacíos</string>
     <string name="code">Código</string>
+    <string name="title_activity_map">Actividad Mapa</string>
+    <string name="navigation_drawer_open">Abrir cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar cajón de navegación</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="contacts">Contactos</string>
 
+    <string name="menu_home">Inicio</string>
+    <string name="menu_gallery">Galeria</string>
+    <string name="menu_slideshow">Diapositivas</string>
+    <string name="menu_tools">Herramientas</string>
+    <string name="menu_share">Compartir</string>
+    <string name="menu_send">Enviar</string>
+    <string name="title_activity_tabs">TabsActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="video_tutorial">Video tutorial Safnow</string>
+    <string name="utilidad_app">Como utilizar Safnow</string>
+    <string name="timer">Temporizador</string>
+    <string name="personalize">Personaliza el tiempo entre notificación</string>
+    <string name="important">Importante</string>
+    <string name="active_alarm">Se ha activado la alarma</string>
+    <string name="are_ok">Estás bien</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="selectTime">Selecciona el tiempo:</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="activated">Activado</string>
+    <string name="minutes">Minutos</string>
 </resources>

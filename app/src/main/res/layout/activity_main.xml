@@ -15,7 +15,7 @@
         android:background="@drawable/textviewborder"
         android:ems="10"
         android:fontFamily="sans-serif"
-        android:hint="Code"
+        android:hint="@string/code"
         android:inputType="textPersonName"
         android:paddingStart="10sp"
         android:textAlignment="textStart"
